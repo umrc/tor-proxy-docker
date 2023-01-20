@@ -1,0 +1,7 @@
+FROM alpine:latest
+RUN apk update && apk add tor
+RUN printf '  \n SocksPort 0.0.0.0:9050 \n  SocksPolicy accept * \n DNSPort 0.0.0.0:5353 \n VirtualAddrNetworkIPv4 10.100.0.0/10 \n AutomapHostsOnResolve 1 \n ' >> /etc/tor/torrc
+RUN chown -R tor /etc/tor
+USER tor
+ENTRYPOINT ["tor"]
+CMD ["-f","/etc/tor/torrc"]
