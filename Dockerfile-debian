@@ -1,0 +1,8 @@
+FROM debian:latest
+RUN apt update && apt full-upgrade -y && apt install tor -y
+RUN printf '  \n SocksPort 9050 \n  SocksListenAddress 0.0.0.0 \n  \n DNSPort 5353 \n DNSListenAddress 0.0.0.0 \n  \n TransPort 9040 \n TransListenAddress 0.0.0.0 \n VirtualAddrNetworkIPv4 10.100.0.0/10 \n AutomapHostsOnResolve 1 \n ' > /etc/tor/torrc
+RUN useradd -m tor
+RUN chown -R tor /etc/tor
+USER tor
+ENTRYPOINT ["tor"]
+CMD ["-f","/etc/tor/torrc"]
