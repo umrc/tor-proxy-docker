@@ -1,0 +1,15 @@
+version: '3.5'
+services:
+	myapp:
+		image: myapp:latest
+		networks:
+			- network
+
+	tor-proxy:
+		image: mytor:latest
+		restart: unless-stopped
+		networks:
+			- network
+
+networks:
+  network:
